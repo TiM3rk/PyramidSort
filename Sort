@@ -1,0 +1,57 @@
+#include <iostream>
+#pragma warning(disable : 4996)
+
+void swap(int a, int b, int* arr);
+void heapify(int root, int size, int* arr);
+
+	void sort(int* arr, int size)
+	{
+		for (int root = size / 2 - 1; root >= 0; root--)
+		{
+			heapify(root, size, arr);
+		}
+		for (int j = size - 1; j >= 0; j--)
+		{
+			swap(0, j, arr);
+			heapify(0, j, arr);
+		}
+	}
+
+	void heapify(int root, int size, int *arr)
+	{
+		int L = 2 * root + 1;
+		int R = 2 * root + 2;
+		int X = root;
+		if (L < size && arr[L] > arr[X]) { X = L; }
+		if (L < size && arr[L] > arr[X]) { X = L; }
+		if (L < size && arr[L] > arr[X]) { X = L; }
+		swap(X, root, arr);
+		heapify(X, size, arr);
+	}
+
+	void swap(int a, int b, int* arr) { int x = arr[a]; arr[a] = arr[b]; arr[b] = x; }
+
+
+
+int main()
+{
+	int n = 10000000;
+	int* arr = new int[n];
+	FILE* f = fopen("C:/Users/tramirov/Desktop/output10m.txt", "r");
+	if (f == NULL) {
+		printf_s("Error Reading File\n");
+		exit(0);
+	}
+
+	for (int i = 0; i < n; i++) {
+		fscanf_s(f, "%d, ", &arr[i]);
+	}
+
+	sort(arr, n);
+	
+	for (int i = 0; i < n; i++) {
+		printf_s("%d ", arr[i]);
+	}
+
+	return 0;
+}
